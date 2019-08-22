@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Silver Line Realignment Proposal</title>
+<style>
+html {
+  height: 100%;
+  }
+body {
+  margin: 0;
+  font-family: menlo;
+  font-size: 14px;
+  overflow: hidden;
+  }
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  }
+path {
+  fill: none;
+  transition: d 2s ease;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  }
+text {
+  font-size: 2px;
+  fill: #444444;
+  stroke: #FFFFFF;
+  stroke-width: 0.2;
+  paint-order: stroke;
+  alignment-baseline: middle;
+  }
+#YL_border, #GR_border, #RD_border, #BL_border {
+  stroke-width: 2.2;
+  stroke: white;
+  }
+</style>
+</head>
+<body>
+<!--
+To calculate ∆x and ∆y for arcs (A):
+For 90º angles, ∆x and ∆y are both equal to the radius
+For 45º angles, ∆A is √(radius²/2) and ∆B is radius - ∆1
+    If the arc is from a horizontal line, ∆x = ∆A and ∆y = ∆B
+    If the arc is from a vertical line, ∆y = ∆A and ∆x = ∆B
+    Sample values:
+    radius   ∆A     ∆B
+       2   1.414  0.586
+       4   2.828  1.172
+       6   4.247  1.753
+-->
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="station" viewBox="0 0 5 5"><circle r="1.5" stroke-width="1" fill="white" stroke="black" cx="2.5" cy="2.5"/></symbol>
+  <symbol id="transfer" viewBox="0 0 10 10"><circle r="4" stroke-width="1" fill="white" stroke="black" cx="5" cy="5"/><circle r="1.5" stroke-width="1" fill="white" stroke="black" cx="5" cy="5"/></symbol>
+  <path id="OR" stroke="#F7931C"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="SV" stroke="#A0A3A1"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="BL_border"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="BL" stroke="#0076C0"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="YL_border"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="GR_border"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="YL" stroke="#FED102"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="GR" stroke="#00A94E"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="RD_border"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <path id="RD" stroke="#E42235"><animate attributeName="d" dur=".8s" begin="indefinite" fill="freeze"/></path>
+  <use id="K08" xlink:href="#station" x="9" y="43" width="2" height="2"><title>Vienna</title></use>
+  <use id="K07" xlink:href="#station" x="12" y="43" width="2" height="2"><title>Dunn Loring</title></use>
+  <use id="K06" xlink:href="#station" x="15" y="43" width="2" height="2"><title>West Falls Church</title></use>
+  <use id="K05" xlink:href="#transfer" x="20" y="43" width="4" height="4"><title>East Falls Church</title></use>
+  <use id="K04" xlink:href="#station" x="24.5" y="44" width="2" height="2"><title>Ballston</title></use>
+  <use id="K03" xlink:href="#station" x="27" y="44" width="2" height="2"><title>Virginia Square</title></use>
+  <use id="K02" xlink:href="#station" x="29.5" y="44" width="2" height="2"><title>Clarendon</title></use>
+  <use id="K01" xlink:href="#station" x="32" y="44" width="2" height="2"><title>Court House</title></use>
+  <use id="C05" xlink:href="#transfer" x="35" y="39" width="4" height="4"><title>Rosslyn</title></use>
+  <use id="C04" xlink:href="#station" x="42" y="36" width="2" height="2"><title>Foggy Bottom</title></use>
+  <use id="C03" xlink:href="#station" x="45" y="36" width="2" height="2"><title>Farragut West</title></use>
+  <use id="C02" xlink:href="#station" x="51" y="36" width="2" height="2"><title>McPherson Square</title></use>
+  <use id="C01" xlink:href="#transfer" x="53" y="40" width="4" height="4"><title>Metro Center</title></use>
+  <use id="D01" xlink:href="#station" x="54" y="44" width="2" height="2"><title>Federal Triangle</title></use>
+  <use id="D02" xlink:href="#station" x="54" y="47" width="2" height="2"><title>Smithsonian</title></use>
+  <use id="D03" xlink:href="#transfer" x="61" y="49" width="4" height="4"><title>L'Enfant Plaza</title></use>
+  <use id="D04" xlink:href="#station" x="65.5" y="50" width="2" height="2"><title>Federal Center</title></use>
+  <use id="D05" xlink:href="#station" x="68" y="50" width="2" height="2"><title>Capitol South</title></use>
+  <use id="D06" xlink:href="#station" x="71.828" y="47.828" width="2" height="2">
+    <title>Eastern Market</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D07" xlink:href="#station" x="73.828" y="45.828" width="2" height="2">
+    <title>Potomac Ave</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D08" xlink:href="#transfer" x="76" y="43" width="4" height="4">
+    <title>Stadium-Armory</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D09" xlink:href="#station" x="82.414" y="40.07" width="2" height="2">
+    <title>Minnesota Ave</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D10" xlink:href="#station" x="84.414" y="38.07" width="2" height="2">
+    <title>Deanwood</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D11" xlink:href="#station" x="86.414" y="36.07" width="2" height="2">
+    <title>Cheverly</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D12" xlink:href="#station" x="88.414" y="34.07" width="2" height="2">
+    <title>Landover</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="D13" xlink:href="#station" x="90.414" y="32.07" width="2" height="2">
+    <title>New Carrollton</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="N06" xlink:href="#station" x="10" y="35" width="2" height="2"><title>Wiehle-Reston East</title></use>
+  <use id="N04" xlink:href="#station" x="11.5" y="36.5" width="2" height="2"><title>Spring Hill</title></use>
+  <use id="N03" xlink:href="#station" x="13" y="38" width="2" height="2"><title>Greensboro</title></use>
+  <use id="N02" xlink:href="#station" x="14.5" y="39.5" width="2" height="2"><title>Tysons Corner</title></use>
+  <use id="N01" xlink:href="#station" x="16" y="41" width="2" height="2"><title>McLean</title></use>
+  <use id="G01" xlink:href="#station" x="85" y="44.656" width="2" height="2">
+    <title>Benning Rd</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="G02" xlink:href="#station" x="87.5" y="44.656" width="2" height="2">
+    <title>Capitol Heights</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="G03" xlink:href="#station" x="90" y="44.656" width="2" height="2">
+    <title>Addison Rd</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="G04" xlink:href="#station" x="92.5" y="44.656" width="2" height="2">
+    <title>Morgan Blvd</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="G05" xlink:href="#station" x="95" y="44.656" width="2" height="2">
+    <title>Largo Town Center</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="J03" xlink:href="#station" x="33" y="85" width="2" height="2"><title>Franconia-Springfield</title></use>
+  <use id="J02" xlink:href="#station" x="39" y="79" width="2" height="2"><title>Van Dorn St</title></use>
+  <use id="C13" xlink:href="#transfer" x="51" y="75" width="4" height="4"><title>King St</title></use>
+  <use id="C12" xlink:href="#station" x="52" y="72.5" width="2" height="2"><title>Braddock Rd</title></use>
+  <use id="C10" xlink:href="#station" x="52" y="70" width="2" height="2"><title>National Airport</title></use>
+  <use id="C09" xlink:href="#station" x="48.5" y="67" width="2" height="2"><title>Crystal City</title></use>
+  <use id="C08" xlink:href="#station" x="45" y="65" width="2" height="2"><title>Pentagon City</title></use>
+  <use id="C07" xlink:href="#transfer" x="44" y="60.5" width="4" height="4"><title>Pentagon</title></use>
+  <use id="C06" xlink:href="#station" x="40.828" y="55.172" width="2" height="2">
+    <title>Arlington Cemetery</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="C15" xlink:href="#station" x="53" y="85" width="2" height="2"><title>Huntington</title></use>
+  <use id="C14" xlink:href="#station" x="53" y="81" width="2" height="2"><title>Eisenhower Ave</title></use>
+  <use id="F02" xlink:href="#station" x="62" y="45" width="2" height="2"><title>Archives</title></use>
+  <use id="B01" xlink:href="#transfer" x="61" y="40" width="4" height="4"><title>Gallery Place</title></use>
+  <use id="E01" xlink:href="#station" x="62" y="37" width="2" height="2"><title>Mount Vernon Sq</title></use>
+  <use id="E02" xlink:href="#station" x="62" y="34" width="2" height="2"><title>Shaw</title></use>
+  <use id="E03" xlink:href="#station" x="59.75" y="30" width="2" height="2"><title>U St</title></use>
+  <use id="E04" xlink:href="#station" x="56.25" y="27" width="2" height="2"><title>Columbia Heights</title></use>
+  <use id="E05" xlink:href="#station" x="59.75" y="24" width="2" height="2"><title>Georgia Ave-Petworth</title></use>
+  <use id="E06" xlink:href="#transfer" x="62.386" y="21.214" width="4" height="4"><title>Fort Totten</title></use>
+  <use id="E07" xlink:href="#station" x="66.386" y="19.214" width="2" height="2"><title>West Hyattsville</title></use>
+  <use id="E08" xlink:href="#station" x="68.386" y="17.214" width="2" height="2"><title>Prince George's Plaza</title></use>
+  <use id="E09" xlink:href="#station" x="70.386" y="15.214" width="2" height="2"><title>College Park</title></use>
+  <use id="E10" xlink:href="#station" x="72.386" y="13.214" width="2" height="2"><title>Greenbelt</title></use>
+  <use id="F11" xlink:href="#station" x="83" y="68" width="2" height="2"><title>Branch Ave</title></use>
+  <use id="F10" xlink:href="#station" x="81.5" y="66.5" width="2" height="2"><title>Suitland</title></use>
+  <use id="F09" xlink:href="#station" x="80" y="65" width="2" height="2"><title>Naylor Rd</title></use>
+  <use id="F08" xlink:href="#station" x="75" y="65.2" width="2" height="2"><title>Southern Ave</title></use>
+  <use id="F07" xlink:href="#station" x="72.5" y="63.5" width="2" height="2"><title>Congress Heights</title></use>
+  <use id="F06" xlink:href="#station" x="70.5" y="61.5" width="2" height="2"><title>Anacostia</title></use>
+  <use id="F05" xlink:href="#station" x="68" y="60" width="2" height="2">
+    <title>Navy Yard</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="F04" xlink:href="#station" x="65" y="60" width="2" height="2">
+    <title>Waterfront</title>
+    <animate attributeName="x" dur=".8s" begin="indefinite" fill="freeze"/>
+    <animate attributeName="y" dur=".8s" begin="indefinite" fill="freeze"/>
+    </use>
+  <use id="A15" xlink:href="#station" x="20.5" y="6.5" width="2" height="2"><title>Shady Grove</title></use>
+  <use id="A14" xlink:href="#station" x="22.7" y="8.7" width="2" height="2"><title>Rockville</title></use>
+  <use id="A13" xlink:href="#station" x="24.9" y="10.9" width="2" height="2"><title>Twinbrook</title></use>
+  <use id="A12" xlink:href="#station" x="27.1" y="13.1" width="2" height="2"><title>White Flint</title></use>
+  <use id="A11" xlink:href="#station" x="29.3" y="15.3" width="2" height="2"><title>Grosvenor</title></use>
+  <use id="A10" xlink:href="#station" x="31.7" y="17.7" width="2" height="2"><title>Medical Center</title></use>
+  <use id="A09" xlink:href="#station" x="33.9" y="19.9" width="2" height="2"><title>Bethesda</title></use>
+  <use id="A08" xlink:href="#station" x="36.1" y="22.1" width="2" height="2"><title>Friendship Heights</title></use>
+  <use id="A07" xlink:href="#station" x="39" y="24" width="2" height="2"><title>Tenleytown</title></use>
+  <use id="A06" xlink:href="#station" x="42.586" y="25.586" width="2" height="2"><title>Van Ness</title></use>
+  <use id="A05" xlink:href="#station" x="43.886" y="26.886" width="2" height="2"><title>Cleveland Park</title></use>
+  <use id="A04" xlink:href="#station" x="45.186" y="28.186" width="2" height="2"><title>Woodley Park</title></use>
+  <use id="A03" xlink:href="#station" x="46.486" y="29.486" width="2" height="2"><title>Dupont Circle</title></use>
+  <use id="A02" xlink:href="#station" x="48" y="32.5" width="2" height="2"><title>Farragut North</title></use>
+  <use id="B02" xlink:href="#station" x="66" y="41" width="2" height="2"><title>Judiciary Sq</title></use>
+  <use id="B03" xlink:href="#station" x="69" y="38" width="2" height="2"><title>Union Station</title></use>
+  <use id="B04" xlink:href="#station" x="69" y="35.2" width="2" height="2"><title>NoMA</title></use>
+  <use id="B05" xlink:href="#station" x="69" y="32.4" width="2" height="2"><title>Rhode Island Ave</title></use>
+  <use id="B06" xlink:href="#station" x="69" y="29.6" width="2" height="2"><title>Brookland</title></use>
+  <use id="B07" xlink:href="#station" x="57.586" y="16.586" width="2" height="2"><title>Takoma</title></use>
+  <use id="B08" xlink:href="#station" x="56" y="12" width="2" height="2"><title>Silver Spring</title></use>
+  <use id="B09" xlink:href="#station" x="56" y="9" width="2" height="2"><title>Forest Glen</title></use>
+  <use id="B10" xlink:href="#station" x="56" y="6" width="2" height="2"><title>Wheaton</title></use>
+  <use id="B11" xlink:href="#station" x="56" y="3" width="2" height="2"><title>Glenmont</title></use>
+  <g id="X01" opacity="0">
+    <use xlink:href="#station" x="34.057" y="46.543" width="2" height="2"><title>South Rosslyn</title></use>
+    <animate attributeName="opacity" dur=".8s" begin="indefinite" fill="freeze"/>
+    <text x="35.057" y="47.543" dx="-2" transform="rotate(-45 35.057,47.543)" style="text-anchor: end">South Rosslyn</text>
+    </g>
+  <g id="X02" opacity="0">
+    <use xlink:href="#station" x="56" y="57" width="2" height="2"><title>Hains Point</title></use>
+    <animate attributeName="opacity" dur=".8s" begin="indefinite" fill="freeze"/>
+    <text x="56" y="57" dx="3" transform="rotate(45 56,57)">Hains Point</text>
+    </g>
+  <g id="X03" opacity="0">
+    <use xlink:href="#station" x="72.758" y="54.242" width="2" height="2"><title>Barracks Row</title></use>
+    <text x="73.758" y="55.242" dx="2">Barracks Row</text>
+    <animate attributeName="opacity" dur=".8s" begin="indefinite" fill="freeze"/>
+    </g>
+</svg>
+</body>
+<script>
+var toggle = false;
+YLv1 = "M54,88 V71 A4,4 0 0,0 50,67 H49 A2,2 0 0,1 47,65 V63.656 A4,4 0 0,1 48.172,60.828 L50.828,58.172 A4,4 0 0,1 53.656,57 H60 A2,2 0 0,0 62,55 V34 A2,2 0 0,0 60,32 H60 A4,4 0 0,1 56,28 V28 A4,4 0 0,1 60,24 H61.172 A2,2 0 0,0 62.586,23.414 L74,12"
+GNv1 = "M85,70 L80.414,65.414 A2,2 0 0,0 77.586,65.414 L77.414,65.586 A2,2 0 0,1 74.586,65.586 L70.586,61.586 A2,2 0 0,0 69.172,61 H66 A2,2 0 0,1 64,59 V34 A4,4 0 0,0 60,30 H60 A2,2 0 0,1 58,28 V28 A2,2 0 0,1 60,26 H61.172 A4,4 0 0,0 64,24.828 L75.414,13.414"
+RDv1 = "M20,6 L38.414,24.414 A2,2 0 0,0 39.828,25 H41.172 A2,2 0 0,1 42.586,25.586 L48.414,31.414 A2,2 0 0,1 49,32.828 V40 A2,2 0 0,0 51,42 H68 A2,2 0 0,0 70,40 V29.828 A2,2 0 0,0 69.414,28.414 L57.586,16.586 A2,2 0 0,1 57,15.17 V2"
+ORv1 = "M8,44 H33 A2,2 0 0,0 35,42 V41 A6,6 0 0,1 41,35 H51 A6,6 0 0,1 57,41 V47 A2,2 0 0,0 59,49 H69     A2,2 0 0,0 70.414,48.414 L74.414,44.414 A6,6 0 0,1 78.661,42.661 H81 A2,2 0 0,0 82.414,42.07 L93,31.489";
+ORv2 = "M8,44 H34 A2,2 0 0,0 36,42 V40 A4,4 0 0,1 40,36 H52 A4,4 0 0,1 56,40 V48 A2,2 0 0,0 58,50 H72.521 A2,2 0 0,0 73.935,49.414 L77.935,45.414 A6,6 0 0,1 82.182,43.661 H83 A2,2 0 0,0 84.414,43.07 L94,33.489";
+SVv1 = "M2,27 L20.414,45.414 A2,2 0 0,0 21,46 H33 A1,1 0 0,1 33,46 A4,4 0 0,0 37,42 V41     A4,4 0 0,1 41,37         L51,    37     A4,4 0 0,1 55,41     L55,47 A4,4 0 0,0 59,51 L69,    51 A4,4 0 0,0 71.828,49.828 L75.828,45.828 A4,4 0 0,1 78.656,44.656 H98"
+SVv2 = "M2,27 L20.414,45.414 A2,2 0 0,0 21,46 H32 A4,4 0 0,1 36,50 A1,1 0 0,0 36,50 V50.688 A6,6 0 0,0 37.753,54.935 L40.065,57.247 A6,6 0 0,0 42.474,59 L55,59 A4,4 0 0,0 55,59 L69.172,59 A2,2 0 0,0 70.586,58.414 L80.758,48.242 A2,2 0 0,1 82.172,47.656 H98"
+BLv1 = "M34,88 V84 A4,4 0 0,1 38,80 H50 A2,2 0 0,0 52,78 V71 A2,2 0 0,0 50,69 H49 A4,4 0 0,1 45,65 V61 A4,4 0 0,0 43.828,58.172 L40.172,54.516 A4,4 0 0,1 39,51.688 V41 A2,2 0 0,1 41,39 H51 A2,2 0 0,1 53,41 V47 A6,6 0 0,0 59,53 H69     A6,6 0 0,0 73.247,51.247 L77.247,47.247 A2,2 0 0,1 78.661,46.661 H98"
+BLv2 = "M34,88 V84 A4,4 0 0,1 38,80 H50 A2,2 0 0,0 52,78 V71 A2,2 0 0,0 50,69 H49 A4,4 0 0,1 45,65 V61 A4,4 0 0,0 43.828,58.172 L39.172,53.516 A4,4 0 0,1 38,50.688 V40 A2,2 0 0,1 40,38 H52 A2,2 0 0,1 54,40 V48 A4,4 0 0,0 58,52 H72.521 A4,4 0 0,0 75.349,50.828 L79.344,46.833 A4,4 0 0,1 82.172,45.661 H98"
+
+function init() {
+  document.getElementById("YL").setAttribute("d", YLv1);
+  document.getElementById("GR").setAttribute("d", GNv1);
+  document.getElementById("RD").setAttribute("d", RDv1);
+  document.getElementById("OR").setAttribute("d", ORv1);
+  document.getElementById("SV").setAttribute("d", SVv1);
+  document.getElementById("BL").setAttribute("d", BLv1);
+  document.getElementById("YL_border").setAttribute("d", YLv1);
+  document.getElementById("GR_border").setAttribute("d", GNv1);
+  document.getElementById("RD_border").setAttribute("d", RDv1);
+  document.getElementById("BL_border").setAttribute("d", BLv1);
+  }
+
+function moveStation(id, pointA, pointB) {
+  var animate_x = document.getElementById(id).getElementsByTagName("animate")[0];
+  var animate_y = document.getElementById(id).getElementsByTagName("animate")[1];
+  animate_x.setAttribute("from", toggle ? pointA.x : pointB.x);
+  animate_x.setAttribute("to",   toggle ? pointB.x : pointA.x);
+  animate_x.beginElement();
+  animate_y.setAttribute("from", toggle ? pointA.y : pointB.y);
+  animate_y.setAttribute("to",   toggle ? pointB.y : pointA.y);
+  animate_y.beginElement();
+  }
+
+function hideStation(id) {
+  var animate_opacity = document.getElementById(id).getElementsByTagName("animate")[0];
+  animate_opacity.setAttribute("from", toggle ? 0 : 1);
+  animate_opacity.setAttribute("to",   toggle ? 1 : 0);
+  animate_opacity.beginElement();
+  }
+
+function clickBody() {
+  toggle = !toggle;
+  if (toggle) {
+    animateLinesAndStations();
+    setTimeout(animateNewStations, 1000);
+    }
+  else {
+    animateNewStations();
+    setTimeout(animateLinesAndStations, 800);
+    }
+  }
+
+function animateLinesAndStations() {
+  var OR_animate = document.getElementById("OR").getElementsByTagName("animate")[0];
+  var SV_animate = document.getElementById("SV").getElementsByTagName("animate")[0];
+  var BL_animate = document.getElementById("BL").getElementsByTagName("animate")[0];
+  var BL_border_animate = document.getElementById("BL_border").getElementsByTagName("animate")[0];
+  OR_animate.setAttribute("from", toggle ? ORv1 : ORv2);
+  OR_animate.setAttribute("to",   toggle ? ORv2 : ORv1);
+  SV_animate.setAttribute("from", toggle ? SVv1 : SVv2);
+  SV_animate.setAttribute("to",   toggle ? SVv2 : SVv1);
+  BL_animate.setAttribute("from", toggle ? BLv1 : BLv2);
+  BL_animate.setAttribute("to",   toggle ? BLv2 : BLv1);
+  BL_border_animate.setAttribute("from", toggle ? BLv1 : BLv2);
+  BL_border_animate.setAttribute("to",   toggle ? BLv2 : BLv1);
+  OR_animate.beginElement();
+  SV_animate.beginElement();
+  BL_animate.beginElement();
+  BL_border_animate.beginElement();
+  moveStation("C06", {x: "40.828", y: "55.172"}, {x: "40.121", y: "55.879"});
+  moveStation("D06", {x: "71.828", y: "47.828"}, {x: "70.5", y: "50"});
+  moveStation("D07", {x: "73.828", y: "45.828"}, {x: "76.349", y: "47.828"});
+  moveStation("D08", {x: "76", y: "43"}, {x: "78.758", y: "44.247"});
+  moveStation("G01", {x: "85", y: "44.656"}, {x: "85", y: "45.656"});
+  moveStation("G02", {x: "87.5", y: "44.656"}, {x: "87.5", y: "45.656"});
+  moveStation("G03", {x: "90", y: "44.656"}, {x: "90", y: "45.656"});
+  moveStation("G04", {x: "92.5", y: "44.656"}, {x: "92.5", y: "45.656"});
+  moveStation("G05", {x: "95", y: "44.656"}, {x: "95", y: "45.656"});
+  moveStation("D09", {x: "82.414", y: "40.07"}, {x: "83.914", y: "41.57"});
+  moveStation("D10", {x: "84.414", y: "38.07"}, {x: "85.914", y: "39.57"});
+  moveStation("D11", {x: "86.414", y: "36.07"}, {x: "87.914", y: "37.57"});
+  moveStation("D12", {x: "88.414", y: "34.07"}, {x: "89.914", y: "35.57"});
+  moveStation("D13", {x: "90.414", y: "32.07"}, {x: "91.914", y: "33.57"});
+  moveStation("F04", {x: "65", y: "60"}, {x: "65", y: "59"});
+  moveStation("F05", {x: "68", y: "60"}, {x: "68", y: "59"});
+  }
+
+function animateNewStations() {
+  hideStation("X01");
+  hideStation("X02");
+  hideStation("X03");
+  }
+
+window.onload = init;
+document.body.addEventListener("click", clickBody)
+</script>
+</html>
