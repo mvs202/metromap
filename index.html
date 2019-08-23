@@ -22,7 +22,6 @@ svg {
   }
 path {
   fill: none;
-  transition: d 2s ease;
   stroke-width: 1.8;
   stroke-linejoin: round;
   }
@@ -34,6 +33,13 @@ text {
   paint-order: stroke;
   alignment-baseline: middle;
   }
+select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  z-index: 1;
+  }
 #YL_border, #GR_border, #RD_border, #BL_border {
   stroke-width: 2.2;
   stroke: white;
@@ -41,6 +47,10 @@ text {
 </style>
 </head>
 <body>
+<select onchange="changeSelection(this)">
+  <option selected>Current</option>
+  <option>Proposed</option>
+  </select>
 <!--
 To calculate ∆x and ∆y for arcs (A):
 For 90º angles, ∆x and ∆y are both equal to the radius
@@ -281,18 +291,6 @@ function hideStation(id) {
   animate_opacity.beginElement();
   }
 
-function clickBody() {
-  toggle = !toggle;
-  if (toggle) {
-    animateLinesAndStations();
-    setTimeout(animateNewStations, 1000);
-    }
-  else {
-    animateNewStations();
-    setTimeout(animateLinesAndStations, 800);
-    }
-  }
-
 function animateLinesAndStations() {
   var OR_animate = document.getElementById("OR").getElementsByTagName("animate")[0];
   var SV_animate = document.getElementById("SV").getElementsByTagName("animate")[0];
@@ -334,7 +332,18 @@ function animateNewStations() {
   hideStation("X03");
   }
 
+function changeSelection(selectObject) {
+  toggle = selectObject.selectedIndex == 1;
+  if (toggle) {
+    animateLinesAndStations();
+    setTimeout(animateNewStations, 1000);
+    }
+  else {
+    animateNewStations();
+    setTimeout(animateLinesAndStations, 800);
+    }
+  }
+
 window.onload = init;
-document.body.addEventListener("click", clickBody)
 </script>
 </html>
